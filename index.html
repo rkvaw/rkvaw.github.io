@@ -158,13 +158,28 @@
         const points = new THREE.Points(geometry, material);
         scene.add(points);
 
+        // Adding rotating cubes to the scene
+        const cubeGeometry = new THREE.BoxGeometry(50, 50, 50);
+        const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+        scene.add(cube);
+
+        // Set camera position
         camera.position.z = 500;
 
         // Animation loop
         function animate() {
             requestAnimationFrame(animate);
+            
+            // Rotate the points
             points.rotation.x += 0.001;
             points.rotation.y += 0.001;
+            
+            // Rotate the cubes
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+
+            // Render the scene
             renderer.render(scene, camera);
         }
         animate();
@@ -174,6 +189,13 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
+        });
+
+        // Interactive camera movement with mouse
+        window.addEventListener('mousemove', (event) => {
+            camera.position.x = (event.clientX / window.innerWidth) * 2 - 1;
+            camera.position.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            camera.lookAt(scene.position);
         });
 
         // Navbar opacity on scroll
