@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>One-Page Dynamic Website</title>
+    <title>One-Page Dynamic Website with Three.js</title>
     <style>
         /* Basic Reset */
         body, html {
@@ -13,44 +13,43 @@
             height: 100%;
         }
 
-        /* Side Navigation Styling */
+        /* Horizontal Navbar Styling */
         nav {
             position: fixed;
-            left: 0;
             top: 0;
-            width: 250px;
-            height: 100%;
-            background-color: #333;
-            padding-top: 20px;
+            left: 0;
+            width: 100%;
+            background-color: rgba(51, 51, 51, 0.7); /* Opaque background */
+            padding: 10px 20px;
             z-index: 100;
+            transition: background-color 0.3s ease;
         }
         nav ul {
             list-style-type: none;
             padding: 0;
             margin: 0;
+            display: flex;
+            justify-content: center;
         }
         nav ul li {
-            padding: 15px;
-            text-align: center;
+            margin: 0 15px;
         }
         nav ul li a {
             color: white;
             text-decoration: none;
             font-size: 18px;
-            display: block;
+            padding: 10px;
             transition: background-color 0.3s ease;
         }
         nav ul li a:hover {
-            background-color: #575757;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
         }
 
-        /* Main Content Area */
+        /* Content Styling */
         .content {
-            margin-left: 250px;
             padding: 20px;
-            background-color: #f1f1f1;
-            height: 100%;
-            overflow-x: hidden;
+            margin-top: 80px; /* Give space for fixed navbar */
         }
 
         /* Section Styling */
@@ -75,22 +74,23 @@
             scroll-behavior: smooth;
         }
 
-        /* For Animation Effect */
-        .fadeIn {
-            animation: fadeIn 2s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        /* Adding Visual Effects */
+        .three-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Keeps it behind the content */
         }
     </style>
 </head>
 <body>
-    <!-- Side Navigation Bar -->
+
+    <!-- Three.js Canvas for Dynamic Background -->
+    <div id="three-container" class="three-container"></div>
+
+    <!-- Horizontal Navigation Bar -->
     <nav>
         <ul>
             <li><a href="#home">Home</a></li>
@@ -104,51 +104,86 @@
     <!-- Main Content -->
     <div class="content">
         <!-- Home Section -->
-        <section id="home" class="fadeIn" style="background-color: #e0e0e0;">
+        <section id="home" style="background-color: #f1f1f1;">
             <h2>Welcome to the Future</h2>
             <p>Welcome to this dynamic one-page website. Explore various sections including Astronomy, Alien Life, and Deep Space, and enjoy reading some random essays.</p>
         </section>
 
         <!-- Astro Section -->
-        <section id="astro" class="fadeIn" style="background-color: #f1f1f1;">
+        <section id="astro" style="background-color: #e0e0e0;">
             <h2>Astronomy - The Universe Beyond</h2>
             <p>The study of the universe beyond Earth, Astronomy encompasses everything from planets to galaxies. Space exploration has brought us closer to understanding cosmic phenomena, and we continue to explore the mysteries of our universe.</p>
-            <p>In the future, we aim to reach further into the stars, sending probes to far-off galaxies and exploring other solar systems. The idea of living on another planet like Mars is becoming more achievable each day.</p>
         </section>
 
         <!-- Alien Section -->
-        <section id="alien" class="fadeIn" style="background-color: #e0e0e0;">
+        <section id="alien" style="background-color: #f1f1f1;">
             <h2>Alien Life - Is There Life Beyond Earth?</h2>
             <p>One of humanity's most profound questions is whether we are alone in the universe. With the discovery of exoplanets in habitable zones around distant stars, scientists are increasingly optimistic about finding extraterrestrial life.</p>
-            <p>Through advancements in technology, we can now search for biosignatures in the atmospheres of distant planets, and we continue to monitor the signals from distant galaxies. The quest for alien life is just beginning.</p>
         </section>
 
         <!-- Deep Space Section -->
-        <section id="deepspace" class="fadeIn" style="background-color: #f1f1f1;">
+        <section id="deepspace" style="background-color: #e0e0e0;">
             <h2>Deep Space - Exploring the Unknown</h2>
             <p>Deep Space refers to regions of space far beyond our solar system. These areas hold vast unknowns, with black holes, neutron stars, and the possibility of new, undiscovered phenomena.</p>
-            <p>As our telescopes and spacecraft venture further out, we are learning more about the enigmatic forces that govern the universe. The more we discover, the more questions we have, pushing humanity to keep exploring the stars.</p>
         </section>
 
         <!-- Random Essays Section -->
-        <section id="random_essays" class="fadeIn" style="background-color: #e0e0e0;">
+        <section id="random_essays" style="background-color: #f1f1f1;">
             <h2>Random Essay - The Future of Technology</h2>
             <p>The future of technology is exciting, and we stand at the cusp of major breakthroughs in AI, robotics, and space travel. As we develop smarter technologies, the way we live, work, and interact with the world will drastically change.</p>
-            <p>From self-driving cars to AI-powered medical devices, the possibilities are endless. But with this rapid progress comes the need to address ethical dilemmas, including data privacy, job displacement, and more.</p>
         </section>
     </div>
 
-    <!-- JavaScript for Dynamic Effects -->
+    <!-- JavaScript for Three.js -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.140.0/build/three.min.js"></script>
     <script>
-        // Dynamically adding fade-in effect to the sections
-        window.addEventListener('DOMContentLoaded', function () {
-            const sections = document.querySelectorAll('section');
-            sections.forEach((section, index) => {
-                // Add the fade-in effect after a delay for each section
-                setTimeout(() => {
-                    section.classList.add('fadeIn');
-                }, 500 * index); // Slight delay for each section
-            });
+        // Setting up Three.js for background animation
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById("three-container").appendChild(renderer.domElement);
+
+        // Create a basic particle system with points
+        const geometry = new THREE.BufferGeometry();
+        const vertices = [];
+        for (let i = 0; i < 1000; i++) {
+            const x = (Math.random() - 0.5) * 2000;
+            const y = (Math.random() - 0.5) * 2000;
+            const z = (Math.random() - 0.5) * 2000;
+            vertices.push(x, y, z);
+        }
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+        const material = new THREE.PointsMaterial({ color: 0x888888, size: 1 });
+        const points = new THREE.Points(geometry, material);
+        scene.add(points);
+
+        camera.position.z = 500;
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            points.rotation.x += 0.001;
+            points.rotation.y += 0.001;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Responsive resizing
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+
+        // Navbar opacity on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.backgroundColor = 'rgba(51, 51, 51, 0.9)';
+            } else {
+                nav.style.backgroundColor = 'rgba(51, 51, 51, 0.7)';
+            }
         });
     </script>
 </body>
