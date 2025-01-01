@@ -137,47 +137,70 @@
     <!-- JavaScript for Three.js -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.140.0/build/three.min.js"></script>
     <script>
-        // Setting up Three.js for background animation
+        // Setup Three.js for background animation
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById("three-container").appendChild(renderer.domElement);
 
-        // Create a basic particle system with points
+        // Adding Particles with Shaders for a Glow Effect
+        const particleCount = 5000;
         const geometry = new THREE.BufferGeometry();
-        const vertices = [];
-        for (let i = 0; i < 1000; i++) {
-            const x = (Math.random() - 0.5) * 2000;
-            const y = (Math.random() - 0.5) * 2000;
-            const z = (Math.random() - 0.5) * 2000;
-            vertices.push(x, y, z);
+        const positions = [];
+        const colors = [];
+        for (let i = 0; i < particleCount; i++) {
+            const x = Math.random() * 2000 - 1000;
+            const y = Math.random() * 2000 - 1000;
+            const z = Math.random() * 2000 - 1000;
+            positions.push(x, y, z);
+            colors.push(Math.random(), Math.random(), Math.random());
         }
-        geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-        const material = new THREE.PointsMaterial({ color: 0x888888, size: 1 });
-        const points = new THREE.Points(geometry, material);
-        scene.add(points);
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
 
-        // Adding rotating cubes to the scene
-        const cubeGeometry = new THREE.BoxGeometry(50, 50, 50);
-        const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-        scene.add(cube);
+        const material = new THREE.PointsMaterial({ 
+            size: 2, 
+            vertexColors: true, 
+            map: new THREE.TextureLoader().load('https://threejs.org/examples/textures/sprites/disc.png'), 
+            transparent: true, 
+            blending: THREE.AdditiveBlending 
+        });
+        const particles = new THREE.Points(geometry, material);
+        scene.add(particles);
+
+        // Create a rotating Torus Knot (from Three.js Examples)
+        const torusKnotGeometry = new THREE.TorusKnotGeometry(100, 30, 100, 16);
+        const torusKnotMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+        const torusKnot = new THREE.Mesh(torusKnotGeometry, torusKnotMaterial);
+        scene.add(torusKnot);
+
+        // Ambient Light and Directional Light (Dynamic Lighting Effect)
+        const ambientLight = new THREE.AmbientLight(0x404040, 1.5);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+        directionalLight.position.set(1, 1, 1).normalize();
+        scene.add(directionalLight);
 
         // Set camera position
         camera.position.z = 500;
 
-        // Animation loop
+        // Animation loop with rotating objects and lighting
         function animate() {
             requestAnimationFrame(animate);
-            
-            // Rotate the points
-            points.rotation.x += 0.001;
-            points.rotation.y += 0.001;
-            
-            // Rotate the cubes
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
+
+            // Rotating particles
+            particles.rotation.x += 0.002;
+            particles.rotation.y += 0.002;
+
+            // Rotating torus knot
+            torusKnot.rotation.x += 0.01;
+            torusKnot.rotation.y += 0.01;
+
+            // Animate the lighting
+            directionalLight.position.x = Math.sin(Date.now() * 0.001) * 10;
+            directionalLight.position.z = Math.cos(Date.now() * 0.001) * 10;
 
             // Render the scene
             renderer.render(scene, camera);
