@@ -1,55 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>My Three.js Portfolio</title>
-    <style>
-        body { margin: 0; overflow: hidden; }
-        #info {
-            position: absolute;
-            top: 10px; left: 10px;
-            color: white; background: rgba(0,0,0,0.5);
-            padding: 10px; border-radius: 5px;
-            font-family: Arial, sans-serif;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ramesh | Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Minimal CSS for layout and style, you can move this to style.css */
+    body, html { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; background: #0a0a23; color: #fff; scroll-behavior: smooth; }
+    nav { position: fixed; width: 100%; top: 0; left: 0; background: rgba(10,10,35,0.95); z-index: 10; box-shadow: 0 2px 8px #0004; }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; }
+    .logo { font-size: 1.5rem; font-weight: bold; color: #00ffe7; letter-spacing: 2px; }
+    .nav-links { list-style: none; display: flex; gap: 2rem; }
+    .nav-links li a { color: #fff; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .nav-links li a:hover { color: #00ffe7; }
+    section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 6rem 2rem 2rem 2rem; position: relative; z-index: 1; }
+    .hero { text-align: center; }
+    .hero h1 { font-size: 3rem; margin-bottom: 1rem; color: #00ffe7; }
+    .hero p { font-size: 1.3rem; color: #fff; }
+    .section-title { font-size: 2.2rem; margin-bottom: 1.5rem; color: #00ffe7; }
+    .about-content, .chapters-content, .projects-content, .thoughts-content { max-width: 800px; }
+    .timeline { border-left: 3px solid #00ffe7; padding-left: 2rem; }
+    .timeline-item { margin-bottom: 2rem; }
+    .timeline-item h4 { margin: 0; color: #ff7be5; }
+    .project-grid { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; }
+    .project-card { background: #18183a; border-radius: 1rem; padding: 1.5rem; min-width: 220px; max-width: 300px; box-shadow: 0 2px 12px #0003; }
+    .dropdown { position: relative; display: inline-block; }
+    .dropdown-content { display: none; position: absolute; background: #18183a; min-width: 200px; box-shadow: 0 2px 8px #0004; border-radius: 0.5rem; z-index: 2; }
+    .dropdown-content a { color: #fff; padding: 0.8rem 1.2rem; text-decoration: none; display: block; }
+    .dropdown-content a:hover { background: #00ffe7; color: #18183a; }
+    .dropdown:hover .dropdown-content { display: block; }
+    footer { text-align: center; padding: 2rem 0; background: #18183a; color: #aaa; }
+    #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; }
+    @media (max-width: 700px) {
+      .nav-container { flex-direction: column; gap: 1rem; }
+      .project-grid { flex-direction: column; align-items: center; }
+      section { padding-top: 7rem; }
+    }
+  </style>
 </head>
 <body>
-    <div id="info">
-        <h1>My Portfolio</h1>
-        <p>Welcome to my Three.js portfolio!</p>
+  <canvas id="bg-canvas"></canvas>
+  <nav>
+    <div class="nav-container">
+      <div class="logo">Ramesh</div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#chapters">Chapters</a></li>
+        <li><a href="#projects">Pet Projects</a></li>
+        <li><a href="#thoughts">Thoughts</a></li>
+        <li class="dropdown">
+          <a href="#knowledge">Knowledge ▼</a>
+          <div class="dropdown-content">
+            <a href="#js">JavaScript</a>
+            <a href="#threejs">Three.js</a>
+            <a href="#webgl">WebGL</a>
+            <a href="#other">Other</a>
+          </div>
+        </li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
-    <script>
-        // Basic Three.js scene
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+  </nav>
 
-        // Add a spinning cube
-        const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshBasicMaterial({ color: 0x0077ff });
-        const cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
+  <section id="about" class="hero">
+    <h1>Hi, I'm Ramesh</h1>
+    <p>Creative developer passionate about 3D graphics, web tech, and interactive experiences.</p>
+  </section>
 
-        camera.position.z = 5;
+  <section id="chapters">
+    <div class="section-title">Chapters</div>
+    <div class="chapters-content timeline">
+      <div class="timeline-item">
+        <h4>2022: Started Coding</h4>
+        <p>Discovered the joy of programming and web development.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>2023: 3D Graphics</h4>
+        <p>Dove into Three.js and built my first interactive 3D projects.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>2024: Portfolio Launch</h4>
+        <p>Launched my personal portfolio and started sharing my work.</p>
+      </div>
+    </div>
+  </section>
 
-        function animate() {
-            requestAnimationFrame(animate);
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
-            renderer.render(scene, camera);
-        }
-        animate();
+  <section id="projects">
+    <div class="section-title">Pet Projects</div>
+    <div class="projects-content project-grid">
+      <div class="project-card">
+        <h3>Colorful Particles</h3>
+        <p>Interactive particle simulation with Three.js.</p>
+      </div>
+      <div class="project-card">
+        <h3>3D Portfolio</h3>
+        <p>This very site! Built with love and code.</p>
+      </div>
+      <div class="project-card">
+        <h3>WebGL Playground</h3>
+        <p>Experiments with shaders and real-time graphics.</p>
+      </div>
+    </div>
+  </section>
 
-        // Responsive resize
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
+  <section id="thoughts">
+    <div class="section-title">Thoughts</div>
+    <div class="thoughts-content">
+      <p>Sometimes I write about code, creativity, and life. Stay tuned for more!</p>
+    </div>
+  </section>
+
+  <section id="knowledge">
+    <div class="section-title">Knowledge</div>
+    <div class="about-content">
+      <ul>
+        <li id="js"><b>JavaScript:</b> ES6+, async/await, DOM, fetch API</li>
+        <li id="threejs"><b>Three.js:</b> Meshes, materials, animation, particles</li>
+        <li id="webgl"><b>WebGL:</b> GLSL, shaders, rendering pipeline</li>
+        <li id="other"><b>Other:</b> CSS, HTML5, Git, Linux, and more</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-title">Contact</div>
+    <div>
+      <p>Email: <a href="mailto:ramesh@example.com" style="color:#00ffe7;">ramesh@example.com</a></p>
+      <p>Connect with me on <a href="#" style="color:#ff7be5;">LinkedIn</a> or <a href="#" style="color:#ff7be5;">GitHub</a></p>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Ramesh. All rights reserved.
+  </footer>
+
+  <!-- Three.js for colorful particle background -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
+  <script>
+    // Colorful particle background using Three.js
+    const canvas = document.getElementById('bg-canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x0a0a23, 1);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 1, 1000);
+    camera.position.z = 100;
+
+    // Particle system
+    const particles = 800;
+    const geometry = new THREE.BufferGeometry();
+    const positions = [];
+    const colors = [];
+    for (let i = 0; i < particles; i++) {
+      positions.push(
+        (Math.random() - 0.5) * 400,
+        (Math.random() - 0.5) * 200,
+        (Math.random() - 0.5) * 200
+      );
+      const color = new THREE.Color();
+      color.setHSL(Math.random(), 1.0, 0.6);
+      colors.push(color.r, color.g, color.b);
+    }
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+    const material = new THREE.PointsMaterial({ size: 3, vertexColors: true, transparent: true, opacity: 0.8 });
+    const points = new THREE.Points(geometry, material);
+    scene.add(points);
+
+    // Animate
+    function animateParticles() {
+      requestAnimationFrame(animateParticles);
+      points.rotation.y += 0.0015;
+      points.rotation.x += 0.0007;
+      renderer.render(scene, camera);
+    }
+    animateParticles();
+
+    // Responsive
+    window.addEventListener('resize', () => {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+    });
+  </script>
 </body>
 </html>
