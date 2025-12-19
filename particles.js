@@ -1,4 +1,4 @@
-// Glittery, interactive, and responsive particle simulation using Three.js
+// Super simple, soft, high-quality cloud effect using Three.js
 
 const canvas = document.getElementById('bg-canvas');
 const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
@@ -7,9 +7,9 @@ renderer.setClearColor(0x0a0a23, 1);
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
-camera.position.z = 120;
+camera.position.z = 200;
 
-const particles = 1200;
+const particles = 40;
 const geometry = new THREE.BufferGeometry();
 const positions = [];
 const velocities = [];
@@ -20,79 +20,56 @@ for (let i = 0; i < particles; i++) {
   positions.push(
     (Math.random() - 0.5) * 400,
     (Math.random() - 0.5) * 200,
-    (Math.random() - 0.5) * 200
+    (Math.random() - 0.5) * 100
   );
   velocities.push(
-    (Math.random() - 0.5) * 0.5,
-    (Math.random() - 0.5) * 0.5,
-    (Math.random() - 0.5) * 0.5
+    (Math.random() - 0.5) * 0.1,
+    (Math.random() - 0.5) * 0.1,
+    0
   );
+  // Soft pastel color
   const color = new THREE.Color();
-  color.setHSL(Math.random(), 1.0, 0.7 + 0.3 * Math.random());
+  color.setHSL(0.55 + Math.random() * 0.1, 0.2 + Math.random() * 0.2, 0.9);
   colors.push(color.r, color.g, color.b);
-  sizes.push(2 + Math.random() * 3);
+  sizes.push(60 + Math.random() * 40);
 }
 geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
 geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
 
 const material = new THREE.PointsMaterial({
-  size: 4,
+  size: 80,
   vertexColors: true,
   transparent: true,
-  opacity: 0.85,
-  blending: THREE.AdditiveBlending, // Glittery effect
+  opacity: 0.18,
+  blending: THREE.AdditiveBlending,
   depthWrite: false
 });
 const points = new THREE.Points(geometry, material);
 scene.add(points);
 
-// Mouse interaction
-let mouse = { x: 0, y: 0 };
-window.addEventListener('mousemove', (e) => {
-  mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-});
-
 // Animate
-function animateParticles() {
-  requestAnimationFrame(animateParticles);
+function animateClouds() {
+  requestAnimationFrame(animateClouds);
 
-  // Update particle positions
+  // Update particle positions for soft movement
   const pos = geometry.getAttribute('position');
   for (let i = 0; i < particles; i++) {
-    let ix = i * 3, iy = i * 3 + 1, iz = i * 3 + 2;
+    let ix = i * 3, iy = i * 3 + 1;
+    pos.array[ix] += velocities[ix] * (0.5 + Math.random() * 0.5);
+    pos.array[iy] += velocities[iy] * (0.5 + Math.random() * 0.5);
 
-    // Mouse attraction
-    let dx = (mouse.x * 200) - pos.array[ix];
-    let dy = (mouse.y * 100) - pos.array[iy];
-    let dist = Math.sqrt(dx * dx + dy * dy);
-
-    if (dist < 80) {
-      velocities[ix] += dx * 0.0007;
-      velocities[iy] += dy * 0.0007;
-    }
-
-    pos.array[ix] += velocities[ix];
-    pos.array[iy] += velocities[iy];
-    pos.array[iz] += velocities[iz];
-
-    // Bounce from edges
-    if (pos.array[ix] < -200 || pos.array[ix] > 200) velocities[ix] *= -1;
-    if (pos.array[iy] < -100 || pos.array[iy] > 100) velocities[iy] *= -1;
-    if (pos.array[iz] < -100 || pos.array[iz] > 100) velocities[iz] *= -1;
-
-    // Damping
-    velocities[ix] *= 0.98;
-    velocities[iy] *= 0.98;
-    velocities[iz] *= 0.98;
+    // Wrap around for endless clouds
+    if (pos.array[ix] < -220) pos.array[ix] = 220;
+    if (pos.array[ix] > 220) pos.array[ix] = -220;
+    if (pos.array[iy] < -120) pos.array[iy] = 120;
+    if (pos.array[iy] > 120) pos.array[iy] = -120;
   }
   pos.needsUpdate = true;
 
-  points.rotation.y += 0.0015;
-  points.rotation.x += 0.0007;
+  points.rotation.z += 0.0002;
   renderer.render(scene, camera);
 }
-animateParticles();
+animateClouds();
 
 // Responsive
 window.addEventListener('resize', () => {
