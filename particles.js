@@ -1,4 +1,4 @@
-// Colorful, interactive particle simulation using Three.js
+// Glittery, interactive, and responsive particle simulation using Three.js
 
 const canvas = document.getElementById('bg-canvas');
 const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
@@ -9,11 +9,12 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
 camera.position.z = 120;
 
-const particles = 1000;
+const particles = 1200;
 const geometry = new THREE.BufferGeometry();
 const positions = [];
 const velocities = [];
 const colors = [];
+const sizes = [];
 
 for (let i = 0; i < particles; i++) {
   positions.push(
@@ -27,13 +28,21 @@ for (let i = 0; i < particles; i++) {
     (Math.random() - 0.5) * 0.5
   );
   const color = new THREE.Color();
-  color.setHSL(Math.random(), 1.0, 0.6);
+  color.setHSL(Math.random(), 1.0, 0.7 + 0.3 * Math.random());
   colors.push(color.r, color.g, color.b);
+  sizes.push(2 + Math.random() * 3);
 }
 geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
 geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
 
-const material = new THREE.PointsMaterial({ size: 3, vertexColors: true, transparent: true, opacity: 0.8 });
+const material = new THREE.PointsMaterial({
+  size: 4,
+  vertexColors: true,
+  transparent: true,
+  opacity: 0.85,
+  blending: THREE.AdditiveBlending, // Glittery effect
+  depthWrite: false
+});
 const points = new THREE.Points(geometry, material);
 scene.add(points);
 
@@ -53,14 +62,14 @@ function animateParticles() {
   for (let i = 0; i < particles; i++) {
     let ix = i * 3, iy = i * 3 + 1, iz = i * 3 + 2;
 
-    // Simple mouse attraction
+    // Mouse attraction
     let dx = (mouse.x * 200) - pos.array[ix];
     let dy = (mouse.y * 100) - pos.array[iy];
     let dist = Math.sqrt(dx * dx + dy * dy);
 
-    if (dist < 60) {
-      velocities[ix] += dx * 0.0005;
-      velocities[iy] += dy * 0.0005;
+    if (dist < 80) {
+      velocities[ix] += dx * 0.0007;
+      velocities[iy] += dy * 0.0007;
     }
 
     pos.array[ix] += velocities[ix];
