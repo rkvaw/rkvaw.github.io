@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="240" height="240" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sweet potato avatar">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ffb07c" />
+      <stop offset="50%" stop-color="#ff8f54" />
+      <stop offset="100%" stop-color="#d96b3b" />
+    </linearGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000" flood-opacity="0.16" />
+    </filter>
+  </defs>
+
+  <rect width="100%" height="100%" rx="28" ry="28" fill="#fff" />
+
+  <!-- sweet potato shape -->
+  <g transform="translate(30,40)" filter="url(#shadow)">
+    <path d="M60 10 C 95 -10, 165 0, 170 50 C 175 100, 130 140, 90 150 C 50 160, 10 120, 10 80 C 10 50, 35 20, 60 10 Z"
+          fill="url(#g)" stroke="#c75a32" stroke-width="2" />
+    <!-- subtle spots -->
+    <ellipse cx="100" cy="80" rx="6" ry="3" fill="#e57b45" opacity="0.22" />
+    <ellipse cx="60" cy="110" rx="8" ry="4" fill="#e57b45" opacity="0.18" />
+    <ellipse cx="120" cy="120" rx="5" ry="2.5" fill="#e57b45" opacity="0.18" />
+  </g>
+
+  <!-- cheerful eyes & smile -->
+  <g transform="translate(50,80)">
+    <circle cx="50" cy="40" r="4.5" fill="#3a2a1a" />
+    <circle cx="100" cy="40" r="4.5" fill="#3a2a1a" />
+    <path d="M60 60 Q 80 78 100 60" stroke="#3a2a1a" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.9" />
+  </g>
+
+</svg>
