@@ -1,40 +1,39 @@
-// Super simple, soft, high-quality cloud effect using Three.js
-
+// particles.js — soft cloud background (Three.js)
 const canvas = document.getElementById('bg-canvas');
-const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1);
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setClearColor(0x0a0a23, 1);
+renderer.setClearColor(0x000000, 0); // fully transparent
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
-camera.position.z = 200;
 
-const particles = 40;
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
+camera.position.z = 180;
+
+// Soft cloud particles
+const particleCount = 36;
 const geometry = new THREE.BufferGeometry();
-const positions = [];
-const velocities = [];
-const colors = [];
-const sizes = [];
+const positions = new Float32Array(particleCount * 3);
+const colors = new Float32Array(particleCount * 3);
+const sizes = new Float32Array(particleCount);
 
-for (let i = 0; i < particles; i++) {
-  positions.push(
-    (Math.random() - 0.5) * 400,
-    (Math.random() - 0.5) * 200,
-    (Math.random() - 0.5) * 100
-  );
-  velocities.push(
-    (Math.random() - 0.5) * 0.1,
-    (Math.random() - 0.5) * 0.1,
-    0
-  );
-  // Soft pastel color
-  const color = new THREE.Color();
-  color.setHSL(0.55 + Math.random() * 0.1, 0.2 + Math.random() * 0.2, 0.9);
-  colors.push(color.r, color.g, color.b);
-  sizes.push(60 + Math.random() * 40);
+for (let i = 0; i < particleCount; i++) {
+  const ix = i * 3;
+  positions[ix] = (Math.random() - 0.5) * 550;
+  positions[ix + 1] = (Math.random() - 0.5) * 260;
+  positions[ix + 2] = (Math.random() - 0.5) * 80;
+
+  const c = new THREE.Color();
+  // soft pastel blue-ish cloud
+  c.setHSL(0.55 + Math.random() * 0.03, 0.12 + Math.random() * 0.06, 0.85 + Math.random() * 0.04);
+  colors[ix] = c.r; colors[ix + 1] = c.g; colors[ix + 2] = c.b;
+
+  sizes[i] = 60 + Math.random() * 60;
 }
-geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
 const material = new THREE.PointsMaterial({
   size: 80,
@@ -44,36 +43,39 @@ const material = new THREE.PointsMaterial({
   blending: THREE.AdditiveBlending,
   depthWrite: false
 });
+
 const points = new THREE.Points(geometry, material);
 scene.add(points);
 
-// Animate
-function animateClouds() {
-  requestAnimationFrame(animateClouds);
+// gentle motion using per-particle velocity
+const velocities = new Float32Array(particleCount * 3);
+for (let i = 0; i < velocities.length; i++) velocities[i] = (Math.random() - 0.5) * 0.02;
 
-  // Update particle positions for soft movement
-  const pos = geometry.getAttribute('position');
-  for (let i = 0; i < particles; i++) {
-    let ix = i * 3, iy = i * 3 + 1;
-    pos.array[ix] += velocities[ix] * (0.5 + Math.random() * 0.5);
-    pos.array[iy] += velocities[iy] * (0.5 + Math.random() * 0.5);
+function animate() {
+  requestAnimationFrame(animate);
 
-    // Wrap around for endless clouds
-    if (pos.array[ix] < -220) pos.array[ix] = 220;
-    if (pos.array[ix] > 220) pos.array[ix] = -220;
-    if (pos.array[iy] < -120) pos.array[iy] = 120;
-    if (pos.array[iy] > 120) pos.array[iy] = -120;
+  const pos = geometry.getAttribute('position').array;
+  for (let i = 0; i < particleCount; i++) {
+    const ix = i * 3;
+    pos[ix] += velocities[ix] * (0.5 + Math.random() * 0.6);
+    pos[ix + 1] += velocities[ix + 1] * (0.5 + Math.random() * 0.6);
+
+    // wrap around
+    if (pos[ix] < -600) pos[ix] = 600;
+    if (pos[ix] > 600) pos[ix] = -600;
+    if (pos[ix + 1] < -320) pos[ix + 1] = 320;
+    if (pos[ix + 1] > 320) pos[ix + 1] = -320;
   }
-  pos.needsUpdate = true;
+  geometry.getAttribute('position').needsUpdate = true;
 
-  points.rotation.z += 0.0002;
+  points.rotation.z += 0.00015;
   renderer.render(scene, camera);
 }
-animateClouds();
+animate();
 
-// Responsive
 window.addEventListener('resize', () => {
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  camera.aspect = window.innerWidth / window.innerHeight;
+  const w = window.innerWidth, h = window.innerHeight;
+  renderer.setSize(w, h);
+  camera.aspect = w / h;
   camera.updateProjectionMatrix();
 });

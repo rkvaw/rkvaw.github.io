@@ -1,230 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ramesh | Portfolio</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-      background: #fff;
-      color: #181818;
-      min-height: 100vh;
-      scroll-behavior: smooth;
-    }
-    #bg-canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.10;
-      filter: blur(2px);
-    }
-    nav {
-      width: 100%;
-      position: fixed;
-      top: 0; left: 0;
-      z-index: 10;
-      background: none;
-      padding: 2.2rem 2.5rem 0 0;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      pointer-events: none;
-    }
-    .nav-links {
-      display: flex;
-      gap: 2.2rem;
-      list-style: none;
-      margin: 0; padding: 0;
-      pointer-events: auto;
-    }
-    .nav-links a {
-      color: #181818;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 1.08rem;
-      letter-spacing: 0.02em;
-      opacity: 0.7;
-      transition: opacity 0.2s, color 0.2s;
-      padding: 0.2rem 0.1rem;
-      border-radius: 4px;
-    }
-    .nav-links a:hover, .nav-links a.active {
-      color: #00bcd4;
-      opacity: 1;
-      background: #f0f8fc;
-    }
-    .center-content {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding-top: 7rem;
-      animation: fadeIn 1.2s;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px);}
-      to { opacity: 1; transform: none;}
-    }
-    .bio {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 2.5rem;
-      gap: 1.2rem;
-    }
-    .bio-pic {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 2px 16px #00bcd422;
-      border: 3px solid #fff;
-      background: #eee;
-      transition: box-shadow 0.3s;
-    }
-    .bio-pic:hover {
-      box-shadow: 0 4px 32px #00bcd444;
-    }
-    .main-title {
-      font-size: 2.2rem;
-      font-weight: 800;
-      margin: 0 0 0.5rem 0;
-      letter-spacing: 0.01em;
-      color: #181818;
-      line-height: 1.1;
-    }
-    .subtitle {
-      font-size: 1.1rem;
-      color: #444;
-      font-weight: 400;
-      line-height: 1.6;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .section {
-      margin: 2.5rem 0 0 0;
-      text-align: center;
-      width: 100%;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .section h2 {
-      font-size: 1.15rem;
-      color: #00bcd4;
-      font-weight: 600;
-      margin-bottom: 1.2rem;
-      margin-top: 0;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-    .posts-list {
-      list-style: none;
-      padding: 0;
-      margin: 0 auto;
-      max-width: 500px;
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
-    .post-card {
-      background: #f8fafc;
-      border-radius: 1rem;
-      box-shadow: 0 2px 12px #00bcd41a;
-      padding: 1.2rem 1.3rem;
-      text-align: left;
-      transition: box-shadow 0.2s, background 0.2s;
-      cursor: pointer;
-    }
-    .post-card:hover {
-      background: #f0f8fc;
-      box-shadow: 0 4px 24px #00bcd433;
-    }
-    .post-title {
-      font-size: 1.13rem;
-      font-weight: 600;
-      color: #00bcd4;
-      margin-bottom: 0.3rem;
-    }
-    .post-desc {
-      color: #444;
-      font-size: 1rem;
-    }
-    @media (max-width: 700px) {
-      .main-title { font-size: 1.5rem; }
-      nav { padding: 1.2rem 1rem 0 0; }
-      .nav-links { gap: 1.2rem; }
-      .subtitle { font-size: 1rem; }
-      .bio-pic { width: 80px; height: 80px; }
-      .section, .posts-list { max-width: 98vw; }
-    }
-    @media (max-width: 500px) {
-      .main-title { font-size: 1.1rem; }
-      .subtitle { font-size: 0.98rem; }
-      .post-title { font-size: 1rem; }
-      .post-desc { font-size: 0.95rem; }
-    }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ramesh — Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <canvas id="bg-canvas"></canvas>
-  <nav>
-    <ul class="nav-links">
-      <li><a href="#about" class="active">About Me</a></li>
-      <li><a href="#thoughts">Thoughts</a></li>
-      <li><a href="#bookmarks">Bookmarks</a></li>
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <nav class="nav">
+    <ul class="nav-list">
+      <li><a href="#about" class="nav-link active">About</a></li>
+      <li><a href="#thoughts" class="nav-link">Thoughts</a></li>
+      <li><a href="#projects" class="nav-link">Projects</a></li>
+      <li><a href="#bookmarks" class="nav-link">Bookmarks</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
     </ul>
   </nav>
-  <div class="center-content">
-    <section id="about" class="bio">
-      <img src="avatar.jpg" alt="Ramesh" class="bio-pic">
-      <h1 class="main-title">Ramesh</h1>
-      <div class="subtitle">
-        I'm a creative developer passionate about web technology, 3D graphics, and building interactive experiences.<br>
-        Welcome to my portfolio.
+
+  <main class="page">
+    <section id="about" class="section about">
+      <img src="avatar.jpg" alt="Ramesh" class="avatar" />
+      <div class="about-text">
+        <h1 class="name">Ramesh</h1>
+        <p class="tagline">Creative developer focused on web technology, 3D graphics and interactive experiences.</p>
+        <div class="contact-inline">
+          <a href="mailto:rameshkvaw@gmail.com" class="contact-link">rameshkvaw@gmail.com</a>
+          <span class="sep">•</span>
+          <a href="tel:+919768579639" class="contact-link">+91 9768579639</a>
+          <span class="sep">•</span>
+          <a href="https://linkedin.com/in/ramesh-v-0b868b145" class="contact-link" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
       </div>
     </section>
+
     <section id="thoughts" class="section">
-      <h2>Thoughts</h2>
-      <ul class="posts-list">
-        <li class="post-card">
-          <div class="post-title">Post 1 – Debugging the UART</div>
-          <div class="post-desc">A journey through troubleshooting UART communication issues and how I finally got it working.</div>
+      <h2 class="section-title">Thoughts</h2>
+      <ul class="posts">
+        <li class="post">
+          <h3 class="post-title">Post 1 – Debugging the UART</h3>
+          <p class="post-excerpt">A journey through troubleshooting UART communication issues and how I finally got it working.</p>
         </li>
-        <li class="post-card">
-          <div class="post-title">Post 2 – Messing with UART</div>
-          <div class="post-desc">Experiments, mistakes, and discoveries while learning the ins and outs of UART protocols.</div>
+        <li class="post">
+          <h3 class="post-title">Post 2 – Messing with UART</h3>
+          <p class="post-excerpt">Experiments, mistakes, and discoveries while learning the ins and outs of UART protocols.</p>
         </li>
-        <li class="post-card">
-          <div class="post-title">Post 3 – Done with the UART</div>
-          <div class="post-desc">Wrapping up my UART adventure and sharing key takeaways for future projects.</div>
+        <li class="post">
+          <h3 class="post-title">Post 3 – Done with the UART</h3>
+          <p class="post-excerpt">Wrapping up my UART adventure and sharing key takeaways for future projects.</p>
         </li>
       </ul>
     </section>
+
+    <section id="projects" class="section">
+      <h2 class="section-title">Projects</h2>
+      <ul class="simple-list">
+        <li><strong>Soft Cloud Background</strong> — Dreamy cloud effect using Three.js.</li>
+        <li><strong>3D Portfolio</strong> — This portfolio and collection of experiments.</li>
+        <li><strong>WebGL Playground</strong> — Shader and particle experiments.</li>
+      </ul>
+    </section>
+
     <section id="bookmarks" class="section">
-      <h2>Bookmarks</h2>
-      <ul>
-        <li><a href="https://threejs.org/" target="_blank" style="color:#00bcd4;">Three.js</a> – 3D JavaScript library</li>
-        <li><a href="https://developer.mozilla.org/" target="_blank" style="color:#00bcd4;">MDN Web Docs</a> – Web development resources</li>
-        <li><a href="https://popovicu.com/" target="_blank" style="color:#00bcd4;">popovicu.com</a> – Portfolio inspiration</li>
+      <h2 class="section-title">Bookmarks</h2>
+      <ul class="simple-list">
+        <li><a href="https://threejs.org/" target="_blank" rel="noopener">Three.js</a></li>
+        <li><a href="https://developer.mozilla.org/" target="_blank" rel="noopener">MDN Web Docs</a></li>
+        <li><a href="https://popovicu.com/" target="_blank" rel="noopener">popovicu.com</a></li>
       </ul>
     </section>
-  </div>
-  <footer style="text-align:center;color:#aaa;padding:2.5rem 0 1.2rem 0;font-size:1rem;width:100%;letter-spacing:0.03em;">
-    &copy; 2025 Ramesh. All rights reserved.
-  </footer>
+
+    <section id="contact" class="section">
+      <h2 class="section-title">Contact</h2>
+      <p class="contact-block">Email: <a href="mailto:rameshkvaw@gmail.com">rameshkvaw@gmail.com</a> · Phone: <a href="tel:+919768579639">+91 9768579639</a></p>
+    </section>
+
+    <footer class="footer">
+      <small>&copy; 2025 Ramesh. All rights reserved.</small>
+    </footer>
+  </main>
+
   <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
   <script src="particles.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
