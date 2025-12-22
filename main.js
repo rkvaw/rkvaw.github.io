@@ -34,3 +34,28 @@
   window.addEventListener('resize', onScroll);
   onScroll();
 })();
+
+// Post expand/collapse: reveal hidden paragraphs when a post is clicked
+(function () {
+  const posts = Array.from(document.querySelectorAll('.post'));
+  if (!posts.length) return;
+
+  posts.forEach(post => {
+    // make the title look interactive
+    const title = post.querySelector('.post-title');
+    if (title) title.style.cursor = 'pointer';
+
+    post.addEventListener('click', (e) => {
+      // ignore clicks on links inside a post
+      if (e.target && e.target.closest && e.target.closest('a')) return;
+      post.classList.toggle('expanded');
+      // for accessibility, update aria-hidden on content
+      const content = post.querySelector('.post-content');
+      if (content) content.setAttribute('aria-hidden', String(!post.classList.contains('expanded')));
+      // scroll the expanded content into view smoothly
+      if (post.classList.contains('expanded')) {
+        content?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  });
+})();

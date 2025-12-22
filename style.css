@@ -47,6 +47,11 @@ body{
 .post-title{margin:0;font-size:1.02rem;color:var(--text);font-weight:700}
 .post-excerpt{margin:0;color:var(--muted);font-size:0.97rem}
 
+/* hidden full post content; toggled with .expanded class */
+.post-content{display:none;margin-top:0.6rem;color:var(--muted);font-size:0.96rem;line-height:1.6}
+.post.expanded .post-content{display:block}
+.post{cursor:pointer}
+
 .simple-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.7rem}
 .simple-list a{color:var(--accent);text-decoration:none}
 

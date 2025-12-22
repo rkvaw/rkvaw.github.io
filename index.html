@@ -33,14 +33,33 @@
         <li class="post">
           <h3 class="post-title">Post 1 — Debugging the UART</h3>
           <p class="post-excerpt">A journey through troubleshooting UART communication issues and how I finally got it working.</p>
+          <div class="post-content" aria-hidden="true">
+            <p>When my UART link kept dropping bytes, I started by checking the basics: baud rate mismatches, wiring, and ground reference. It turned out that a subtle grounding issue introduced noise on the line under certain loads.</p>
+            <p>I implemented hardware debouncing and added small capacitors to smooth spikes. After isolating sections of the circuit, I could reliably replicate the error and observe the faulty behaviour on a logic analyzer.</p>
+            <p>On the firmware side, retry logic and checksum verification were introduced so partial frames could be recovered without corrupting downstream state. That made the system much more robust to transient faults.</p>
+            <p>Documentation and automated tests were the final step: a small fuzz tester injected timing jitter and byte drops which helped validate the fixes under stress.</p>
+          </div>
         </li>
         <li class="post">
           <h3 class="post-title">Post 2 — Messing with UART</h3>
           <p class="post-excerpt">Experiments, mistakes, and discoveries while learning the ins and outs of UART protocols.</p>
+          <div class="post-content" aria-hidden="true">
+            <p>Experimenting is the fastest way to learn a protocol. I tried different parity and stop-bit configurations to see how legacy devices responded, and kept a log of compatibility quirks.</p>
+            <p>I built a small bridge that converted UART to WebSocket so I could monitor frames in the browser. That tooling paid off — seeing timing visually helped locate framing errors.</p>
+            <p>Some mistakes were educational: accidentally swapping TX/RX pins produced strange behaviour that looked like data corruption but was simply misrouting.</p>
+            <p>In the end, a combination of better tooling, automated checks, and modular firmware made future experiments straightforward and safer.</p>
+            <p>Sharing snippets and a reproducible test bench helped teammates quickly reproduce scenarios and contribute fixes.</p>
+          </div>
         </li>
         <li class="post">
           <h3 class="post-title">Post 3 — Done with the UART</h3>
           <p class="post-excerpt">Wrapping up my UART adventure and sharing key takeaways for future projects.</p>
+          <div class="post-content" aria-hidden="true">
+            <p>After weeks of iterating, I consolidated the learnings into a checklist: verify grounds, confirm baud/format, use a logic analyzer, and add retry/CRC where appropriate.</p>
+            <p>Refactoring the protocol layer to be testable allowed unit tests to validate framing and error handling without hardware attached, streamlining development.</p>
+            <p>We also added a lightweight monitoring mode that emits diagnostic frames to help field debugging without halting production behaviour.</p>
+            <p>These practices reduced field incidents significantly and made onboarding easier for new engineers touching the communication stack.</p>
+          </div>
         </li>
       </ul>
     </article>
@@ -60,6 +79,13 @@
         <li><a href="https://threejs.org/" target="_blank" rel="noopener">Three.js</a></li>
         <li><a href="https://developer.mozilla.org/" target="_blank" rel="noopener">MDN Web Docs</a></li>
         <li><a href="https://popovicu.com/" target="_blank" rel="noopener">popovicu.com</a></li>
+        <li><a href="https://css-tricks.com/" target="_blank" rel="noopener">CSS-Tricks</a></li>
+        <li><a href="https://stackoverflow.com/" target="_blank" rel="noopener">Stack Overflow</a></li>
+        <li><a href="https://codepen.io/" target="_blank" rel="noopener">CodePen</a></li>
+        <li><a href="https://dev.to/" target="_blank" rel="noopener">dev.to</a></li>
+        <li><a href="https://web.dev/" target="_blank" rel="noopener">web.dev</a></li>
+        <li><a href="https://glslsandbox.com/" target="_blank" rel="noopener">GLSL Sandbox</a></li>
+        <li><a href="https://observablehq.com/" target="_blank" rel="noopener">Observable</a></li>
       </ul>
     </section>
 
