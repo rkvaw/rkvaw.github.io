@@ -17,10 +17,15 @@
   <g transform="translate(30,40)" filter="url(#shadow)">
     <path d="M60 10 C 95 -10, 165 0, 170 50 C 175 100, 130 140, 90 150 C 50 160, 10 120, 10 80 C 10 50, 35 20, 60 10 Z"
           fill="url(#g)" stroke="#c75a32" stroke-width="2" />
-    <!-- subtle spots -->
-    <ellipse cx="100" cy="80" rx="6" ry="3" fill="#e57b45" opacity="0.22" />
-    <ellipse cx="60" cy="110" rx="8" ry="4" fill="#e57b45" opacity="0.18" />
-    <ellipse cx="120" cy="120" rx="5" ry="2.5" fill="#e57b45" opacity="0.18" />
+    <!-- spikes (small pointed accents) -->
+    <path d="M48 6 L42 -6 L56 2 Z" fill="#b85a33" opacity="0.95" transform="translate(6,4) rotate(-10)" />
+    <path d="M140 30 L152 18 L146 36 Z" fill="#b85a33" opacity="0.95" transform="translate(-10,6) rotate(12)" />
+    <path d="M130 90 L142 78 L136 96 Z" fill="#b85a33" opacity="0.9" transform="translate(-8,4) rotate(6)" />
+    <!-- black specs (character) -->
+    <circle cx="98" cy="84" r="2.2" fill="#231f20" opacity="0.95" />
+    <circle cx="70" cy="112" r="2" fill="#231f20" opacity="0.9" />
+    <circle cx="124" cy="118" r="1.6" fill="#231f20" opacity="0.9" />
+    <ellipse cx="82" cy="78" rx="3.5" ry="1.6" fill="#231f20" opacity="0.08" />
   </g>
 
   <!-- cheerful eyes & smile -->
