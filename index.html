@@ -1,6 +1,230 @@
-<ul class="nav-links">
-  <li><a href="index.html" class="active">About</a></li>
-  <li><a href="posts.html">Posts</a></li>
-  <li><a href="projects.html">Projects</a></li>
-  <li><a href="tags.html">Tags</a></li>
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ramesh | Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      background: #fff;
+      color: #181818;
+      min-height: 100vh;
+      scroll-behavior: smooth;
+    }
+    #bg-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.10;
+      filter: blur(2px);
+    }
+    nav {
+      width: 100%;
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 10;
+      background: none;
+      padding: 2.2rem 2.5rem 0 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      pointer-events: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+      margin: 0; padding: 0;
+      pointer-events: auto;
+    }
+    .nav-links a {
+      color: #181818;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.08rem;
+      letter-spacing: 0.02em;
+      opacity: 0.7;
+      transition: opacity 0.2s, color 0.2s;
+      padding: 0.2rem 0.1rem;
+      border-radius: 4px;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: #00bcd4;
+      opacity: 1;
+      background: #f0f8fc;
+    }
+    .center-content {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding-top: 7rem;
+      animation: fadeIn 1.2s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: none;}
+    }
+    .bio {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      gap: 1.2rem;
+    }
+    .bio-pic {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 2px 16px #00bcd422;
+      border: 3px solid #fff;
+      background: #eee;
+      transition: box-shadow 0.3s;
+    }
+    .bio-pic:hover {
+      box-shadow: 0 4px 32px #00bcd444;
+    }
+    .main-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin: 0 0 0.5rem 0;
+      letter-spacing: 0.01em;
+      color: #181818;
+      line-height: 1.1;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      color: #444;
+      font-weight: 400;
+      line-height: 1.6;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .section {
+      margin: 2.5rem 0 0 0;
+      text-align: center;
+      width: 100%;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .section h2 {
+      font-size: 1.15rem;
+      color: #00bcd4;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+      margin-top: 0;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .posts-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 auto;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .post-card {
+      background: #f8fafc;
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px #00bcd41a;
+      padding: 1.2rem 1.3rem;
+      text-align: left;
+      transition: box-shadow 0.2s, background 0.2s;
+      cursor: pointer;
+    }
+    .post-card:hover {
+      background: #f0f8fc;
+      box-shadow: 0 4px 24px #00bcd433;
+    }
+    .post-title {
+      font-size: 1.13rem;
+      font-weight: 600;
+      color: #00bcd4;
+      margin-bottom: 0.3rem;
+    }
+    .post-desc {
+      color: #444;
+      font-size: 1rem;
+    }
+    @media (max-width: 700px) {
+      .main-title { font-size: 1.5rem; }
+      nav { padding: 1.2rem 1rem 0 0; }
+      .nav-links { gap: 1.2rem; }
+      .subtitle { font-size: 1rem; }
+      .bio-pic { width: 80px; height: 80px; }
+      .section, .posts-list { max-width: 98vw; }
+    }
+    @media (max-width: 500px) {
+      .main-title { font-size: 1.1rem; }
+      .subtitle { font-size: 0.98rem; }
+      .post-title { font-size: 1rem; }
+      .post-desc { font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="#about" class="active">About Me</a></li>
+      <li><a href="#thoughts">Thoughts</a></li>
+      <li><a href="#bookmarks">Bookmarks</a></li>
+    </ul>
+  </nav>
+  <div class="center-content">
+    <section id="about" class="bio">
+      <img src="avatar.jpg" alt="Ramesh" class="bio-pic">
+      <h1 class="main-title">Ramesh</h1>
+      <div class="subtitle">
+        I'm a creative developer passionate about web technology, 3D graphics, and building interactive experiences.<br>
+        Welcome to my portfolio.
+      </div>
+    </section>
+    <section id="thoughts" class="section">
+      <h2>Thoughts</h2>
+      <ul class="posts-list">
+        <li class="post-card">
+          <div class="post-title">Post 1 – Debugging the UART</div>
+          <div class="post-desc">A journey through troubleshooting UART communication issues and how I finally got it working.</div>
+        </li>
+        <li class="post-card">
+          <div class="post-title">Post 2 – Messing with UART</div>
+          <div class="post-desc">Experiments, mistakes, and discoveries while learning the ins and outs of UART protocols.</div>
+        </li>
+        <li class="post-card">
+          <div class="post-title">Post 3 – Done with the UART</div>
+          <div class="post-desc">Wrapping up my UART adventure and sharing key takeaways for future projects.</div>
+        </li>
+      </ul>
+    </section>
+    <section id="bookmarks" class="section">
+      <h2>Bookmarks</h2>
+      <ul>
+        <li><a href="https://threejs.org/" target="_blank" style="color:#00bcd4;">Three.js</a> – 3D JavaScript library</li>
+        <li><a href="https://developer.mozilla.org/" target="_blank" style="color:#00bcd4;">MDN Web Docs</a> – Web development resources</li>
+        <li><a href="https://popovicu.com/" target="_blank" style="color:#00bcd4;">popovicu.com</a> – Portfolio inspiration</li>
+      </ul>
+    </section>
+  </div>
+  <footer style="text-align:center;color:#aaa;padding:2.5rem 0 1.2rem 0;font-size:1rem;width:100%;letter-spacing:0.03em;">
+    &copy; 2025 Ramesh. All rights reserved.
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
+  <script src="particles.js"></script>
+</body>
+</html>
