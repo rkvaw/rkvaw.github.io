@@ -2,7 +2,7 @@
   --accent: #0a84ff;
   --text: #0f1724;
   --muted: #6b7280;
-  --bg: #ffffff;
+  --bg: #f5f7fa; /* soft off-white */
   --max-width: 720px;
   --gutter: 1.25rem;
   --radius: 12px;
@@ -57,4 +57,17 @@ body{
   .avatar-fallback{font-size:0.95rem}
   .page{padding:3.6rem 0.9rem 4rem}
   .name{font-size:1.6rem}
+}
+
+/* dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root{
+    --accent: #3fc3ff;
+    --text: #e6eef6;
+    --muted: #b7c2cc;
+    --bg: #071023; /* dark navy */
+  }
+  body { background: var(--bg); color: var(--text); }
+  .post { background: rgba(255,255,255,0.03); box-shadow: none; }
+  .avatar-fallback { background: rgba(255,255,255,0.03); color: var(--accent); }
 }
