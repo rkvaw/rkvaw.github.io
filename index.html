@@ -9,29 +9,34 @@
 <body>
   <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
-  <nav class="nav">
+  <nav class="nav" role="navigation" aria-label="Main navigation">
     <ul class="nav-list">
-      <li><a href="#about" class="nav-link active">About</a></li>
-      <li><a href="#thoughts" class="nav-link">Thoughts</a></li>
-      <li><a href="#projects" class="nav-link">Projects</a></li>
-      <li><a href="#bookmarks" class="nav-link">Bookmarks</a></li>
-      <li><a href="#contact" class="nav-link">Contact</a></li>
+      <li><a class="nav-link active" href="#about">About</a></li>
+      <li><a class="nav-link" href="#thoughts">Thoughts</a></li>
+      <li><a class="nav-link" href="#projects">Projects</a></li>
+      <li><a class="nav-link" href="#bookmarks">Bookmarks</a></li>
+      <li><a class="nav-link" href="#contact">Contact</a></li>
     </ul>
   </nav>
 
-  <main class="page">
+  <main class="page" id="top">
     <section id="about" class="section about">
-      <img src="avatar.jpg" alt="Ramesh" class="avatar" />
-      <div class="about-text">
-        <h1 class="name">Ramesh</h1>
-        <p class="tagline">Creative developer focused on web technology, 3D graphics and interactive experiences.</p>
-        <div class="contact-inline">
-          <a href="mailto:rameshkvaw@gmail.com" class="contact-link">rameshkvaw@gmail.com</a>
-          <span class="sep">•</span>
-          <a href="tel:+919768579639" class="contact-link">+91 9768579639</a>
-          <span class="sep">•</span>
-          <a href="https://linkedin.com/in/ramesh-v-0b868b145" class="contact-link" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
+      <div class="avatar-wrap">
+        <img src="avatar.jpg" alt="Ramesh" class="avatar"
+             onerror="this.style.display='none';document.querySelector('.avatar-fallback').style.display='flex';"
+             onload="document.querySelector('.avatar-fallback').style.display='none';" />
+        <div class="avatar-fallback" aria-hidden="true">RV</div>
+      </div>
+
+      <h1 class="name">Ramesh</h1>
+      <p class="tagline">Creative developer focused on modern web technology, 3D graphics and interactive experiences.</p>
+
+      <div class="contact-inline">
+        <a class="contact-link" href="mailto:rameshkvaw@gmail.com">rameshkvaw@gmail.com</a>
+        <span class="sep">•</span>
+        <a class="contact-link" href="tel:+919768579639">+91 9768579639</a>
+        <span class="sep">•</span>
+        <a class="contact-link" href="https://linkedin.com/in/ramesh-v-0b868b145" target="_blank" rel="noopener">LinkedIn</a>
       </div>
     </section>
 
@@ -39,15 +44,15 @@
       <h2 class="section-title">Thoughts</h2>
       <ul class="posts">
         <li class="post">
-          <h3 class="post-title">Post 1 – Debugging the UART</h3>
+          <h3 class="post-title">Post 1 — Debugging the UART</h3>
           <p class="post-excerpt">A journey through troubleshooting UART communication issues and how I finally got it working.</p>
         </li>
         <li class="post">
-          <h3 class="post-title">Post 2 – Messing with UART</h3>
+          <h3 class="post-title">Post 2 — Messing with UART</h3>
           <p class="post-excerpt">Experiments, mistakes, and discoveries while learning the ins and outs of UART protocols.</p>
         </li>
         <li class="post">
-          <h3 class="post-title">Post 3 – Done with the UART</h3>
+          <h3 class="post-title">Post 3 — Done with the UART</h3>
           <p class="post-excerpt">Wrapping up my UART adventure and sharing key takeaways for future projects.</p>
         </li>
       </ul>
@@ -57,7 +62,7 @@
       <h2 class="section-title">Projects</h2>
       <ul class="simple-list">
         <li><strong>Soft Cloud Background</strong> — Dreamy cloud effect using Three.js.</li>
-        <li><strong>3D Portfolio</strong> — This portfolio and collection of experiments.</li>
+        <li><strong>3D Portfolio</strong> — This portfolio and a collection of experiments.</li>
         <li><strong>WebGL Playground</strong> — Shader and particle experiments.</li>
       </ul>
     </section>
@@ -73,14 +78,15 @@
 
     <section id="contact" class="section">
       <h2 class="section-title">Contact</h2>
-      <p class="contact-block">Email: <a href="mailto:rameshkvaw@gmail.com">rameshkvaw@gmail.com</a> · Phone: <a href="tel:+919768579639">+91 9768579639</a></p>
+      <p class="contact-block">Email: <a class="contact-link" href="mailto:rameshkvaw@gmail.com">rameshkvaw@gmail.com</a> · Phone: <a class="contact-link" href="tel:+919768579639">+91 9768579639</a></p>
     </section>
 
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
       <small>&copy; 2025 Ramesh. All rights reserved.</small>
     </footer>
   </main>
 
+  <!-- scripts -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
   <script src="particles.js"></script>
   <script src="main.js"></script>

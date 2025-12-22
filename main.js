@@ -4,7 +4,6 @@
   const sections = links.map(l => document.querySelector(l.getAttribute('href')));
   const offset = 80;
 
-  // smooth scroll for nav links
   links.forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
@@ -17,7 +16,6 @@
     });
   });
 
-  // highlight on scroll
   function onScroll() {
     const y = window.scrollY + offset;
     let current = links[0];
