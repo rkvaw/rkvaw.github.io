@@ -1,35 +1,31 @@
-// main.js — smooth scrolling and active nav link on scroll
+// main.js — smooth scroll helper and safe nav highlight
 (function () {
+  // find nav links (if any)
   const links = Array.from(document.querySelectorAll('.nav-link'));
-  if (!links || links.length === 0) {
-    // No nav links present — nothing to wire up
-    return;
-  }
+  if (!links || links.length === 0) return; // nothing to do
 
   const sections = links.map(l => document.querySelector(l.getAttribute('href')));
-  const offset = 80;
+  const offset = 72; // pixels to account for any fixed header if present
 
-  // smooth scroll for nav links
+  // Smooth scrolling
   links.forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       const target = document.querySelector(link.getAttribute('href'));
       if (!target) return;
-      window.scrollTo({
-        top: target.getBoundingClientRect().top + window.scrollY - 72,
-        behavior: 'smooth'
-      });
+      const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - offset);
+      window.scrollTo({ top, behavior: 'smooth' });
     });
   });
 
-  // highlight on scroll
+  // Highlight active link on scroll
   function onScroll() {
-    const y = window.scrollY + offset;
+    const y = window.scrollY + offset + 1;
     let current = links[0];
     for (let i = 0; i < sections.length; i++) {
-      if (!sections[i]) continue;
-      const top = sections[i].offsetTop;
-      if (y >= top) current = links[i];
+      const sec = sections[i];
+      if (!sec) continue;
+      if (y >= sec.offsetTop) current = links[i];
     }
     links.forEach(l => l.classList.toggle('active', l === current));
   }
