@@ -77,3 +77,51 @@ body{
   .post { background: rgba(255,255,255,0.03); box-shadow: none; }
   .avatar-fallback { background: rgba(255,255,255,0.03); color: var(--accent); }
 }
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 80px 10%;
+  min-height: 90vh;
+  gap: 40px;
+}
+
+.hero-content {
+  max-width: 500px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+.hero-buttons {
+  margin-top: 25px;
+}
+
+.btn {
+  padding: 12px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.primary {
+  background: #000;
+  color: #fff;
+}
+
+.secondary {
+  border: 1px solid #000;
+  color: #000;
+}
+
+.hero-media img {
+  max-width: 420px;
+  border-radius: 12px;
+}
